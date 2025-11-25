@@ -5,15 +5,15 @@ Servo servo_two;
 
 const int AIN1 = 22;
 const int AIN2 = 23;
-const int PWMA = 9;
+const int PWMA = 2;
 
 const int BIN1 = 28;
 const int BIN2 = 29;
-const int PWMB = 10;
+const int PWMB = 3;
 
 int motorSpeed = 200;
 
-void forward() {
+void forward(int time) {
   digitalWrite(AIN1, HIGH);
   digitalWrite(AIN2, LOW);
   analogWrite(PWMA, motorSpeed);
@@ -21,9 +21,10 @@ void forward() {
   digitalWrite(BIN1, HIGH);
   digitalWrite(BIN2, LOW);
   analogWrite(PWMB, motorSpeed);
+  delay(time);
 }
 
-void backward() {
+void backward(int time) {
   digitalWrite(AIN1, LOW);
   digitalWrite(AIN2, HIGH);
   analogWrite(PWMA, motorSpeed);
@@ -31,11 +32,14 @@ void backward() {
   digitalWrite(BIN1, LOW);
   digitalWrite(BIN2, HIGH);
   analogWrite(PWMB, motorSpeed);
+  delay(time);
 }
 
-void stopMotors() {
+void stopMotors(int time) {
   analogWrite(PWMA, 0);
   analogWrite(PWMB, 0);
+
+  delay(time);
 }
 int clampAngle(int angle) {
   if (angle < 0)  return 0;
@@ -74,6 +78,7 @@ void move_servo_two(int initial_angle, int final_angle) {
       delay(10);
     }
   }
+  delay(5000);
 }
 
 void setup() {
@@ -92,14 +97,15 @@ void setup() {
   delay(400);
   servo_two.write(90);
   delay(200);
+  stopMotors(1000);
 }
 
 void loop() {
-  backward();
-  delay(100);
-
+  backward(4000);
+  //delay(2000);
+  stopMotors(1000);
+  
   move_servo_two(90, 150);   // pick up
-  delay(2000);
 
   move_servo_one(180, 0);    // lift or move
   delay(4000);
@@ -107,15 +113,13 @@ void loop() {
   servo_one.write(1);
   move_servo_two(150, 60);   // swing back
 
-  backward();
-  delay(5000);
+  backward(3000);
+ 
 
-  servo_one.write(180);
+  forward(8000);
+  
 
-  forward();
-  delay(4000);
+  move_servo_two(60, 0);     // drop
+  stopMotors(10000);
 
-  move_servo_two(60, -20);     // drop
-  stopMotors();
-  delay(2000);
 }
