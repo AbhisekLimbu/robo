@@ -1,6 +1,4 @@
-Got it — here’s a **short, clean README**.
 
----
 
 # Arduino Grab & Drop Robot
 
