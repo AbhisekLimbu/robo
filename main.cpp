@@ -12,6 +12,7 @@
   const int PWMB = 3;
 
   int motorSpeed = 200;
+  bool done = false;
 
   void forward(int time) {
     digitalWrite(AIN1, HIGH);
@@ -112,6 +113,7 @@
   }
 
   void loop() {
+    if(done) return; //if true exist, just once. 
     stopMotors(1000);
     backward(4000);
     //delay(2000);
@@ -130,5 +132,5 @@
 
     f_dropB(60, 0);     // drop
     stopMotors(10000);
-
+    done = true;
   }
