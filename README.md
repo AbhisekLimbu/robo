@@ -1,7 +1,10 @@
-![Uploading robo.jpeg…]()
-
-
 # Arduino Grab & Drop Robot
+
+
+![robo](https://github.com/user-attachments/assets/61cca1c5-3be9-4fa4-91ac-9d043a6429c0)
+
+
+
 
 This project controls a robot with:
 
